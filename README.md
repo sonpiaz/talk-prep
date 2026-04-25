@@ -19,30 +19,27 @@ Works with Claude Code, Codex, Gemini CLI, Antigravity, Cursor, or standalone vi
 ## The flow at a glance
 
 ```mermaid
-flowchart TD
-    Start([You: 'I have a talk in 3 weeks']) --> P1
+flowchart LR
+    Start([raw idea]) --> P1
 
-    subgraph THINK [Movement 1 - THINK]
-        direction TB
-        P1[Phase 1<br/>BRIEF<br/>10 min] --> P2[Phase 2<br/>IDEAS<br/>15 min]
-        P2 --> P3[Phase 3<br/>OUTLINE<br/>15 min]
+    subgraph THINK [1 · THINK]
+        direction LR
+        P1[BRIEF<br/>10m] --> P2[IDEAS<br/>15m] --> P3[OUTLINE<br/>15m]
     end
 
-    subgraph WRITE [Movement 2 - WRITE]
-        direction TB
-        P4[Phase 4<br/>SCRIPT<br/>30 min] --> P5{{Phase 5<br/>STYLE LOCK<br/>10 min}}
+    subgraph WRITE [2 · WRITE]
+        direction LR
+        P4[SCRIPT<br/>30m] --> P5{{STYLE LOCK<br/>10m}}
     end
 
-    subgraph SHIP [Movement 3 - SHIP]
-        direction TB
-        P6[Phase 6<br/>SLIDES<br/>20 min] --> P7[Phase 7<br/>VISUALS<br/>15 min]
-        P7 --> P8[Phase 8<br/>BUILD HTML<br/>10 min]
-        P8 --> P9[Phase 9<br/>EXPORT PPTX<br/>10 min]
+    subgraph SHIP [3 · SHIP]
+        direction LR
+        P6[SLIDES<br/>20m] --> P7[VISUALS<br/>15m] --> P8[BUILD<br/>10m] --> P9[EXPORT<br/>10m]
     end
 
-    P3 -->|gate: outline approved?| P4
-    P5 -->|gate: style locked?| P6
-    P9 --> Done([deck.pptx<br/>+ rehearsal notes])
+    P3 --> P4
+    P5 --> P6
+    P9 --> Done([deck.pptx])
 
     style P5 fill:#F5B942,stroke:#0A0A0C,color:#0A0A0C
     style Done fill:#0A0A0C,color:#F5E6CE
