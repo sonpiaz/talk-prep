@@ -18,33 +18,9 @@ Works with Claude Code, Codex, Gemini CLI, Antigravity, Cursor, or standalone vi
 
 ## The flow at a glance
 
-```mermaid
-flowchart LR
-    Start([raw idea]) --> P1
-
-    subgraph THINK [1 · THINK]
-        direction LR
-        P1[BRIEF<br/>10m] --> P2[IDEAS<br/>15m] --> P3[OUTLINE<br/>15m]
-    end
-
-    subgraph WRITE [2 · WRITE]
-        direction LR
-        P4[SCRIPT<br/>30m] --> P5{{STYLE LOCK<br/>10m}}
-    end
-
-    subgraph SHIP [3 · SHIP]
-        direction LR
-        P6[SLIDES<br/>20m] --> P7[VISUALS<br/>15m] --> P8[BUILD<br/>10m] --> P9[EXPORT<br/>10m]
-    end
-
-    P3 --> P4
-    P5 --> P6
-    P9 --> Done([deck.pptx])
-
-    style P5 fill:#F5B942,stroke:#0A0A0C,color:#0A0A0C
-    style Done fill:#0A0A0C,color:#F5E6CE
-    style Start fill:#0A0A0C,color:#F5E6CE
-```
+<p align="center">
+  <img src="assets/flow.svg" alt="9-phase flow: THINK → WRITE → SHIP" width="720">
+</p>
 
 Total: ~135 min (1h 45m) end-to-end. Style lock (Phase 5) is the most important gate — locking visual tokens **before** slide content prevents the #1 time sink: retroactive design changes.
 
@@ -64,17 +40,11 @@ Total: ~135 min (1h 45m) end-to-end. Style lock (Phase 5) is the most important 
 
 ### Provider chain (Phase 7)
 
-```mermaid
-flowchart LR
-    Map([06-image-map.md]) --> Tier{KYMA_API_KEY<br/>set?}
-    Tier -->|yes| Kyma[Kyma async API<br/>api.kymaapi.com<br/>POST then poll]
-    Tier -->|no| Fal{FAL_KEY<br/>set?}
-    Fal -->|yes| Direct[fal.ai direct<br/>queue.fal.run]
-    Fal -->|no| Unsplash[Unsplash<br/>placeholder URLs]
-    Kyma --> Out([images/*.jpg])
-    Direct --> Out
-    Unsplash --> Out
-```
+<p align="center">
+  <img src="assets/provider-chain.svg" alt="Image generation fallback: Kyma → fal.ai → Unsplash" width="720">
+</p>
+
+> Diagram sources live in `assets/*.mmd`. Re-render with `bunx @mermaid-js/mermaid-cli -i assets/flow.mmd -o assets/flow.svg -b transparent -t neutral`.
 
 ---
 

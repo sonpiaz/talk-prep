@@ -1,0 +1,23 @@
+flowchart TB
+    Start([raw idea]) --> THINK
+
+    subgraph THINK [1 · THINK · 40m]
+        direction LR
+        P1[BRIEF<br/>10m] --> P2[IDEAS<br/>15m] --> P3[OUTLINE<br/>15m]
+    end
+
+    subgraph WRITE [2 · WRITE · 40m]
+        direction LR
+        P4[SCRIPT<br/>30m] --> P5{{STYLE LOCK<br/>10m}}
+    end
+
+    subgraph SHIP [3 · SHIP · 55m]
+        direction LR
+        P6[SLIDES<br/>20m] --> P7[VISUALS<br/>15m] --> P8[BUILD<br/>10m] --> P9[EXPORT<br/>10m]
+    end
+
+    THINK --> WRITE --> SHIP --> Done([deck.pptx])
+
+    style P5 fill:#F5B942,stroke:#0A0A0C,color:#0A0A0C
+    style Done fill:#0A0A0C,color:#F5E6CE
+    style Start fill:#0A0A0C,color:#F5E6CE

@@ -1,0 +1,9 @@
+flowchart LR
+    Map([06-image-map.md]) --> Tier{KYMA_API_KEY<br/>set?}
+    Tier -->|yes| Kyma[Kyma async API<br/>api.kymaapi.com<br/>POST then poll]
+    Tier -->|no| Fal{FAL_KEY<br/>set?}
+    Fal -->|yes| Direct[fal.ai direct<br/>queue.fal.run]
+    Fal -->|no| Unsplash[Unsplash<br/>placeholder URLs]
+    Kyma --> Out([images/*.jpg])
+    Direct --> Out
+    Unsplash --> Out
