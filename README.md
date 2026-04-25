@@ -11,7 +11,7 @@ Works with Claude Code, Codex, Gemini CLI, Antigravity, Cursor, or standalone vi
 - A structured path: brief → ideas → outline → script → style lock → slide content → visuals → build → export.
 - User gates between phases so style decisions do not arrive after slides exist.
 - `founder-cinematic` preset (dark + Be Vietnam Pro + amber accent + editorial photography) based on a conference talk rated 7.5/10 on first pass.
-- `gen-images.ts` — pluggable image generation. Kyma default, fal.ai fallback, Unsplash placeholder. Auto-discovers available models via registry.
+- `gen-images.ts` — image generation via Kyma. Auto-discovers available image models from the registry (cinematic photo, Vietnamese-text-in-image, logo, illustration).
 - `html-to-pptx.ts` — text-editable PPTX export. Import to Canva / Google Slides / PowerPoint and keep editing.
 
 ---
@@ -38,13 +38,7 @@ Total: ~135 min (1h 45m) end-to-end. Style lock (Phase 5) is the most important 
 | 8 BUILD | slides + style + images | `deck.html` | working web deck (keyboard-navigable, 1920×1080) |
 | 9 EXPORT | `deck.html` | `deck.pptx` | text-editable PPTX for Canva / Slides / PowerPoint |
 
-### Provider chain (Phase 7)
-
-<p align="center">
-  <img src="assets/provider-chain.svg" alt="Image generation fallback: Kyma → fal.ai → Unsplash" width="720">
-</p>
-
-> Diagram sources live in `assets/*.mmd`. Re-render with `bunx @mermaid-js/mermaid-cli -i assets/flow.mmd -o assets/flow.svg -b transparent -t neutral`.
+> Diagram source lives at `assets/flow.mmd`. Re-render with `bunx @mermaid-js/mermaid-cli -i assets/flow.mmd -o assets/flow.svg -b transparent -t neutral`.
 
 ---
 
@@ -105,20 +99,11 @@ The skill will walk you through 9 phases, each ending with a gate for you to app
 
 ## Environment variables
 
-Set whichever you have. The `gen-images.ts` script picks the highest tier available.
-
 ```bash
-# Tier 1 — Kyma (recommended, image models auto-discovered)
-# Hits api.kymaapi.com/v1/images/generations (async job + poll).
 export KYMA_API_KEY=kyma-xxxxxxxx
-
-# Tier 2 — fal.ai direct (used if no KYMA_API_KEY)
-export FAL_KEY=xxx:yyy
-
-# Tier 3 — no key. Script uses Unsplash placeholders.
 ```
 
-`KYMA_API_KEY` is recommended — Kyma routes to the best available image model for each intent (cinematic photo, Vietnamese text in image, logo, flat illustration) and gives you OpenAI-compatible access without managing multiple provider keys.
+`gen-images.ts` hits `api.kymaapi.com/v1/images/generations` (async job + poll). Kyma routes each image intent — cinematic photo, Vietnamese text in image, logo, flat illustration — to the best available model and gives you OpenAI-compatible access with one key.
 
 Get a Kyma key at [kymaapi.com](https://kymaapi.com).
 
