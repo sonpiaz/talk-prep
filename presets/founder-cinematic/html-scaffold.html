@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1920, initial-scale=1">
+<title>Talk Deck — founder-cinematic</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;800&family=IBM+Plex+Mono:wght@500&family=Fraunces:ital,wght@1,400;1,600&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg: #0A0A0C;
+    --bg-soft: #14141A;
+    --text: #F5E6CE;
+    --muted: #A89E8C;
+    --accent: #F5B942;
+    --accent-soft: #8C6E2E;
+    --rule: #2A2A30;
+
+    --fs-display: 96px;
+    --fs-title: 64px;
+    --fs-subtitle: 32px;
+    --fs-body: 24px;
+    --fs-caption: 18px;
+    --fs-mono: 20px;
+
+    --slide-w: 1920px;
+    --slide-h: 1080px;
+    --pad: 96px;
+
+    --font-display: "Be Vietnam Pro", system-ui, sans-serif;
+    --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+    --font-italic: "Fraunces", Georgia, serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: var(--fs-body);
+    line-height: 1.4;
+    overflow: hidden;
+  }
+
+  .deck {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+  }
+
+  .slide {
+    position: absolute;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    display: none;
+    padding: var(--pad);
+    overflow: hidden;
+  }
+
+  .slide.active { display: flex; }
+
+  .kicker {
+    font-family: var(--font-mono);
+    font-size: var(--fs-mono);
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  h1 {
+    font-size: var(--fs-display);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+
+  h2 {
+    font-size: var(--fs-title);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.015em;
+  }
+
+  .accent { color: var(--accent); }
+  .muted { color: var(--muted); }
+  .soft { color: var(--accent-soft); }
+
+  /* ====== 1. TITLE HERO ====== */
+  .slide-title-hero {
+    flex-direction: column;
+    justify-content: flex-end;
+    background-size: cover;
+    background-position: center;
+    padding: 0;
+  }
+  .slide-title-hero .scrim {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      rgba(10,10,12,0.95) 0%,
+      rgba(10,10,12,0.7) 35%,
+      rgba(10,10,12,0.2) 70%,
+      rgba(10,10,12,0) 100%
+    );
+  }
+  .slide-title-hero .content {
+    position: relative;
+    padding: var(--pad);
+    max-width: 1400px;
+  }
+  .slide-title-hero .kicker { margin-bottom: 32px; }
+  .slide-title-hero h1 { margin-bottom: 24px; }
+  .slide-title-hero .subtitle {
+    font-size: var(--fs-subtitle);
+    color: var(--muted);
+    font-weight: 400;
+  }
+
+  /* ====== 2. PHOTO FULL-BLEED ====== */
+  .slide-photo-bleed {
+    padding: 0;
+    background-size: cover;
+    background-position: center;
+  }
+  .slide-photo-bleed .caption {
+    position: absolute;
+    bottom: var(--pad);
+    left: var(--pad);
+    right: var(--pad);
+    font-size: var(--fs-subtitle);
+    color: var(--text);
+    text-shadow: 0 2px 20px rgba(0,0,0,0.8);
+  }
+
+  /* ====== 3. STAT BIG NUMBER ====== */
+  .slide-stat {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+  .slide-stat .number {
+    font-size: 320px;
+    font-weight: 800;
+    color: var(--accent);
+    line-height: 1;
+    letter-spacing: -0.04em;
+    margin-bottom: 48px;
+  }
+  .slide-stat .caption {
+    font-size: var(--fs-title);
+    color: var(--text);
+    max-width: 1200px;
+  }
+
+  /* ====== 4. COMPARE ROW ====== */
+  .slide-compare {
+    flex-direction: column;
+    justify-content: center;
+    gap: 80px;
+  }
+  .slide-compare .row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 96px;
+  }
+  .slide-compare .col .kicker { margin-bottom: 16px; }
+  .slide-compare .col .body {
+    font-size: var(--fs-title);
+    font-weight: 600;
+    line-height: 1.2;
+  }
+  .slide-compare .col.old .kicker { color: var(--accent-soft); }
+  .slide-compare .col.new .kicker { color: var(--accent); }
+
+  /* ====== 5. QUOTE DARK ====== */
+  .slide-quote {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 0;
+  }
+  .slide-quote .left {
+    padding: var(--pad);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .slide-quote .right {
+    background-size: cover;
+    background-position: center;
+  }
+  .slide-quote blockquote {
+    font-family: var(--font-italic);
+    font-style: italic;
+    font-size: var(--fs-title);
+    line-height: 1.25;
+    margin-bottom: 40px;
+    color: var(--text);
+  }
+  .slide-quote .attribution {
+    font-family: var(--font-mono);
+    font-size: var(--fs-mono);
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  /* ====== 6. GRID 2x2 ====== */
+  .slide-grid {
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 2px;
+    background: var(--rule);
+  }
+  .slide-grid .tile {
+    background: var(--bg-soft);
+    padding: 64px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+  }
+  .slide-grid .tile .tile-caption {
+    font-size: var(--fs-body);
+    color: var(--text);
+    text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+  }
+  .slide-grid .tile .tile-number {
+    font-size: 120px;
+    font-weight: 800;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  /* ====== 7. STATEMENT ONLY ====== */
+  .slide-statement {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+  .slide-statement .statement {
+    font-size: var(--fs-display);
+    font-weight: 800;
+    line-height: 1.1;
+    max-width: 1400px;
+    letter-spacing: -0.02em;
+  }
+  .slide-statement .statement em {
+    font-family: var(--font-italic);
+    font-style: italic;
+    color: var(--accent);
+    font-weight: 400;
+  }
+
+  /* ====== 8. HANDWRITTEN ACCENT ====== */
+  .slide-handwritten {
+    padding: 0;
+    background-size: cover;
+    background-position: center;
+  }
+  .slide-handwritten .scrim {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(10,10,12,0.7), rgba(10,10,12,0.4));
+  }
+  .slide-handwritten .handwriting {
+    position: relative;
+    font-family: var(--font-italic);
+    font-style: italic;
+    font-size: 120px;
+    color: var(--accent);
+    transform: rotate(-3deg);
+    margin: auto;
+    max-width: 1200px;
+    text-align: center;
+    text-shadow: 0 2px 30px rgba(0,0,0,0.6);
+  }
+
+  /* Slide counter */
+  .counter {
+    position: fixed;
+    bottom: 24px;
+    right: 32px;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--muted);
+    opacity: 0.6;
+    z-index: 100;
+  }
+
+  /* Print/export-ready */
+  @media print {
+    @page { size: 1920px 1080px; margin: 0; }
+    html, body { overflow: visible; }
+    .slide {
+      display: flex !important;
+      page-break-after: always;
+      position: relative;
+      inset: auto;
+    }
+    .counter { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="deck">
+
+  <!-- 1. TITLE HERO -->
+  <section class="slide slide-title-hero active" style="background-image: url('./images/01-hero.jpg')">
+    <div class="scrim"></div>
+    <div class="content">
+      <div class="kicker">Workshop · 2026-04-24</div>
+      <h1>AI làm BUILD<br>rẻ đi 100 lần</h1>
+      <div class="subtitle">Nguyễn Tùng Sơn</div>
+    </div>
+  </section>
+
+  <!-- 2. STAT BIG NUMBER -->
+  <section class="slide slide-stat">
+    <div class="number">9/10</div>
+    <div class="caption">người đang stuck — không phải vì thiếu tool.</div>
+  </section>
+
+  <!-- 3. PHOTO FULL-BLEED -->
+  <section class="slide slide-photo-bleed" style="background-image: url('./images/03-triangle.jpg')">
+    <div class="caption"><strong>NHANH · RẺ · CHẤT LƯỢNG</strong> — chọn 2.</div>
+  </section>
+
+  <!-- 4. COMPARE ROW -->
+  <section class="slide slide-compare">
+    <h2>Công thức</h2>
+    <div class="row">
+      <div class="col old">
+        <div class="kicker">Cũ</div>
+        <div class="body">T1 team → T2 kickoff → T4 MVP → T6 sale</div>
+      </div>
+      <div class="col new">
+        <div class="kicker">Mới</div>
+        <div class="body">D1 launch → D7 validate → 90 ngày × 90 ý tưởng</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. QUOTE DARK -->
+  <section class="slide slide-quote">
+    <div class="left">
+      <div class="kicker">Jensen Huang · Computex 2016</div>
+      <blockquote>"Anybody can build smartphones. We'll let someone else build them."</blockquote>
+      <div class="attribution">10 năm sau — Nvidia $3 nghìn tỷ</div>
+    </div>
+    <div class="right" style="background-image: url('./images/11-jensen.jpg')"></div>
+  </section>
+
+  <!-- 6. GRID 2x2 -->
+  <section class="slide slide-grid">
+    <div class="tile">
+      <div class="tile-number">4,506</div>
+      <div class="tile-caption">contributions 2026</div>
+    </div>
+    <div class="tile">
+      <div class="tile-number">1,870</div>
+      <div class="tile-caption">commits tháng 4</div>
+    </div>
+    <div class="tile">
+      <div class="tile-number">29</div>
+      <div class="tile-caption">repo active</div>
+    </div>
+    <div class="tile">
+      <div class="tile-number">20</div>
+      <div class="tile-caption">repo mới trong 1 tháng</div>
+    </div>
+  </section>
+
+  <!-- 7. STATEMENT ONLY -->
+  <section class="slide slide-statement">
+    <div class="statement">Build cost giảm <em>100×</em>.<br>Bottleneck: CODE → JUDGMENT.</div>
+  </section>
+
+  <!-- 8. HANDWRITTEN ACCENT -->
+  <section class="slide slide-handwritten" style="background-image: url('./images/08-tools.jpg')">
+    <div class="scrim"></div>
+    <div class="handwriting">Ship. Sai. Học.</div>
+  </section>
+
+  <div class="counter"><span id="cur">1</span> / <span id="total">8</span></div>
+
+</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const total = slides.length;
+  document.getElementById('total').textContent = total;
+  let idx = 0;
+
+  function show(i) {
+    idx = (i + total) % total;
+    slides.forEach((s, n) => s.classList.toggle('active', n === idx));
+    document.getElementById('cur').textContent = idx + 1;
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { show(idx + 1); e.preventDefault(); }
+    if (e.key === 'ArrowLeft'  || e.key === 'PageUp')                    { show(idx - 1); e.preventDefault(); }
+    if (e.key === 'Home')                                                { show(0); }
+    if (e.key === 'End')                                                 { show(total - 1); }
+    if (e.key.toLowerCase() === 'f') {
+      if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+      else document.exitFullscreen();
+    }
+  });
+
+  document.addEventListener('click', () => show(idx + 1));
+</script>
+
+</body>
+</html>

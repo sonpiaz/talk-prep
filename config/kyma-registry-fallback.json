@@ -1,0 +1,56 @@
+{
+  "_comment": "Bundled fallback for the Kyma image registry. Live source of truth: https://api.kymaapi.com/registry/image-models.json (CDN-cacheable, no auth). Snapshot updated on demand. Schema mirrors the live endpoint exactly.",
+  "_snapshot_taken": "2026-04-25",
+  "object": "registry",
+  "updated_at": "2026-04-25T05:25:13.951Z",
+  "models": [
+    {
+      "id": "flux-1.1-ultra",
+      "name": "FLUX 1.1 Pro Ultra",
+      "description": "Hero/scene photo. Highest fidelity FLUX. Editorial-grade.",
+      "best_for": "Cinematic photo, hero shot, editorial",
+      "capability": "image_generate",
+      "input_modalities": ["text"],
+      "output_modalities": ["image"],
+      "pricing": { "mode": "per-image", "per_image_usd": 0.081, "currency": "USD" },
+      "hot": true,
+      "recommended": true
+    },
+    {
+      "id": "flux-kontext-pro",
+      "name": "FLUX.1 Kontext Pro",
+      "description": "Image-to-image edit and refinement. Mask + inpaint.",
+      "best_for": "Image edit, inpaint, refinement",
+      "capability": "image_edit",
+      "input_modalities": ["text", "image"],
+      "output_modalities": ["image"],
+      "pricing": { "mode": "per-image", "per_image_usd": 0.054, "currency": "USD" },
+      "hot": true,
+      "recommended": false
+    },
+    {
+      "id": "ideogram-v3",
+      "name": "Ideogram V3",
+      "description": "Text-in-image specialist. Best for typography, packaging, logos.",
+      "best_for": "Typography, packaging, posters, logos",
+      "capability": "image_generate",
+      "input_modalities": ["text"],
+      "output_modalities": ["image"],
+      "pricing": { "mode": "per-image", "per_image_usd": 0.108, "currency": "USD" },
+      "hot": true,
+      "recommended": true
+    },
+    {
+      "id": "recraft-v3",
+      "name": "Recraft V3",
+      "description": "Vector illustration and brand style. Style presets.",
+      "best_for": "Vector, illustration, brand assets",
+      "capability": "image_generate",
+      "input_modalities": ["text"],
+      "output_modalities": ["image"],
+      "pricing": { "mode": "per-image", "per_image_usd": 0.054, "currency": "USD" },
+      "hot": true,
+      "recommended": false
+    }
+  ]
+}

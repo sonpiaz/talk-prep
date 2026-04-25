@@ -1,0 +1,30 @@
+{
+  "name": "talk-prep",
+  "version": "0.1.0",
+  "description": "Opinionated 9-phase workflow skill for preparing cinematic public talks. Agent-agnostic.",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "gen-images": "bun scripts/gen-images.ts",
+    "export-pptx": "bun scripts/html-to-pptx.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "node-html-parser": "^6.1.13",
+    "pptxgenjs": "^3.12.0"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "typescript": "^5.4.0"
+  },
+  "keywords": [
+    "talk",
+    "presentation",
+    "slides",
+    "workshop",
+    "keynote",
+    "pptx",
+    "fal.ai",
+    "kyma"
+  ]
+}
