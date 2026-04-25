@@ -166,11 +166,11 @@ Write output to `05-slides.md` using `templates/05-slides.md`.
 
 ### Phase 7 — VISUALS (15 min)
 
-Decide what each slide needs: fal.ai image, screenshot, or text only.
+Decide what each slide needs: AI-generated image, screenshot, or text only.
 
 Write output to `06-image-map.md` using `templates/06-image-map.md`.
 
-For each `fal.ai`-tagged slide, write a prompt using the photo mood + a concrete object / scene. Use `presets/founder-cinematic/image-prompts.md` as a reference for Kinfolk-style cinematic prompts.
+For each AI-image slide, write a prompt using the photo mood + a concrete object / scene. Use `presets/founder-cinematic/image-prompts.md` as a reference for Kinfolk-style cinematic prompts.
 
 Then run:
 
@@ -178,9 +178,9 @@ Then run:
 KYMA_API_KEY=... bun scripts/gen-images.ts --map 06-image-map.md --out ./images
 ```
 
-If Kyma does not have image models yet, the script falls back to `FAL_KEY` direct, then Unsplash placeholder.
+Kyma routes each prompt to the right model based on intent (cinematic photo → FLUX 1.1 Ultra, Vietnamese text → Ideogram V3, logo → Ideogram V3, illustration → Recraft V3). Cost per image ≈ $0.06–0.11, 10–15s.
 
-**GATE** — user reviews generated images. Regen any that miss. Cost per image ≈ $0.06, 10–15s.
+**GATE** — user reviews generated images. Regen any that miss.
 
 ### Phase 8 — BUILD DECK (10 min)
 
@@ -238,7 +238,7 @@ my-talk/
 
 ---
 
-## Providers and fallbacks
+## Providers
 
 ### Text LLM
 
@@ -246,20 +246,12 @@ This skill does not call text LLMs directly — the agent you are using IS the t
 
 ### Image generation
 
-Tier 1: **Kyma** (default). Set `KYMA_API_KEY`. Models auto-discovered via `https://kymaapi.com/registry/image-models.json` (falls back to bundled `config/kyma-registry-fallback.json` if endpoint is unreachable).
+**Kyma**. Set `KYMA_API_KEY`. Models auto-discovered via `https://api.kymaapi.com/registry/image-models.json` (falls back to bundled `config/kyma-registry-fallback.json` if endpoint is unreachable).
 
-Tier 2: **fal.ai direct**. Set `FAL_KEY`. Used if no `KYMA_API_KEY` present or Kyma has no image models registered yet.
+The registry maps intents → models:
 
-Tier 3: **Unsplash placeholder**. No key required. Used if both above fail. Produces a neutral placeholder URL — you get slides that render, just not the visual identity.
-
-The `scripts/gen-images.ts` script picks the highest tier available and tells you which one it used.
-
-### Routing hints
-
-The registry JSON maps intents → models:
-
-- `vietnamese_text_in_image` → Ideogram V3 (FLUX fails diacritics).
 - `cinematic_photo` → FLUX 1.1 Pro Ultra (Kinfolk vibe winner).
+- `vietnamese_text_in_image` → Ideogram V3 (FLUX fails diacritics).
 - `logo_wordmark` → Ideogram V3 (Recraft produces illustrations not wordmarks).
 - `flat_illustration` → Recraft V3.
 
@@ -282,7 +274,7 @@ Your image prompts in `06-image-map.md` can tag intent; the script routes automa
 - 2 scripts: `gen-images.ts`, `html-to-pptx.ts`.
 - 7 templates.
 - 2 prompt files.
-- Kyma → fal.ai → Unsplash fallback chain with registry-based model discovery.
+- Kyma image generation with registry-based model discovery (FLUX, Ideogram, Recraft).
 
 Roadmap (v0.2): `clean-briefing` and `photo-narrative` presets, examples folder, video/audio support.
 
