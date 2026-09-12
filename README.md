@@ -81,6 +81,8 @@ bun scripts/gen-images.ts --map ./my-talk/06-image-map.md --out ./my-talk/images
 bun scripts/html-to-pptx.ts --in ./my-talk/deck.html --out ./my-talk/deck.pptx
 ```
 
+**Runs on [Kyma API](https://kymaapi.com?utm_source=talk-prep).** Kyma generates slide images from the image map so the deck gets real visuals without a separate image account.
+
 ---
 
 ## Quick start (Claude Code)
@@ -113,8 +115,6 @@ export KYMA_API_KEY=kyma-xxxxxxxx
 | `image_edit` | [`flux-kontext-pro`](https://kymaapi.com/models/flux-kontext-pro?utm_source=talk-prep) | `POST https://kymaapi.com/v1/images/generations` | Image-to-image edit |
 
 Get a Kyma key at [kymaapi.com](https://kymaapi.com?utm_source=talk-prep).
-
-Runs on [Kyma API](https://kymaapi.com?utm_source=talk-prep): one key generates every slide visual from the image map, routed by intent to the right image model.
 
 ---
 
