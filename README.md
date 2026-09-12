@@ -103,9 +103,18 @@ The skill will walk you through 9 phases, each ending with a gate for you to app
 export KYMA_API_KEY=kyma-xxxxxxxx
 ```
 
-`gen-images.ts` hits `api.kymaapi.com/v1/images/generations` (async job + poll). Kyma routes each image intent — cinematic photo, Vietnamese text in image, logo, flat illustration — to the best available model and gives you OpenAI-compatible access with one key.
+`gen-images.ts` hits `POST https://kymaapi.com/v1/images/generations` (async job + poll via `GET /v1/jobs/{id}`). Intent tags in the image map route to the models below.
 
-Get a Kyma key at [kymaapi.com](https://kymaapi.com).
+| Intent | Model | Kyma endpoint | Best for |
+|--------|-------|---------------|----------|
+| `cinematic_photo` (default) | `flux-1.1-ultra` | `POST https://kymaapi.com/v1/images/generations` | Editorial photography |
+| `vietnamese_text_in_image`, `logo_wordmark` | [`ideogram-v3`](https://kymaapi.com/models/ideogram-v3?utm_source=talk-prep) | `POST https://kymaapi.com/v1/images/generations` | Typography, packaging, logos |
+| `flat_illustration` | `recraft-v3` | `POST https://kymaapi.com/v1/images/generations` | Flat illustration |
+| `image_edit` | [`flux-kontext-pro`](https://kymaapi.com/models/flux-kontext-pro?utm_source=talk-prep) | `POST https://kymaapi.com/v1/images/generations` | Image-to-image edit |
+
+Get a Kyma key at [kymaapi.com](https://kymaapi.com?utm_source=talk-prep).
+
+Runs on [Kyma API](https://kymaapi.com?utm_source=talk-prep): one key generates every slide visual from the image map, routed by intent to the right image model.
 
 ---
 
